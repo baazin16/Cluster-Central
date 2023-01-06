@@ -19,6 +19,7 @@
       text-align: center;
       padding: 8px;
       background-color: #dddddd;
+      border: 1px solid black;
     }
   </style>
 </head>
