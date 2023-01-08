@@ -1,0 +1,115 @@
+<head>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      border: 1px solid black;
+    }
+    td {
+    border: 1px solid #dddddd;
+    text-align: right;
+    vertical-align: top;
+    padding: 8px;
+    width: 100px;
+    height: 100px;
+  }
+
+    th {
+      border: 1px solid #dddddd;
+      text-align: center;
+      padding: 8px;
+      background-color: #dddddd;
+    }
+    #title {
+      font-size: 35px;
+      text-align: center;
+      padding: 15px;
+    }
+  </style>
+</head>
+
+<body onload="init()">
+  <!-- Title to display the month and year -->
+  <div id="title" style="float: none;"></div>
+
+  <!-- Buttons to navigate between months -->
+  <button id="prev-btn" onclick="prevMonth()">Previous</button>
+  <button id="next-btn" onclick="nextMonth()">Next</button>
+
+  <!-- Table to display the calendar -->
+  <table id="calendar">
+    <tr>
+      <th>Sun</th>
+      <th>Mon</th>
+      <th>Tue</th>
+      <th>Wed</th>
+      <th>Thu</th>
+      <th>Fri</th>
+      <th>Sat</th>
+    </tr>
+  </table>
+
+  <script>
+    // Set the month and year for the calendar
+    var month = 0; // January
+    var year = 2023;
+
+    function init() {
+      // Set the first day of the month
+      var firstDay = new Date(year, month, 1);
+      // Get the day of the week that the first day is on
+      var firstDayOfWeek = firstDay.getDay();
+      // Get the total number of days in the month
+      var numDaysInMonth = new Date(year, month + 1, 0).getDate();
+
+      // Get the table element
+      var calendar = document.getElementById("calendar");
+
+      // Add the days of the month to the calendar
+      var day = 1;
+      for (var i = 0; i < 5; i++) { // January 2023 only has 5 weeks
+        var row = calendar.insertRow(i + 1);
+        for (var j = 0; j < 7; j++) {
+          var cell = row.insertCell(j);
+          if (i == 0 && j < firstDayOfWeek) {
+            // Add empty cells for days of the previous month
+            cell.innerHTML = "";
+          } else if (day > numDaysInMonth) {
+            // Add empty cells for days of the next month
+            cell.innerHTML = "";
+          } else {
+            // Add the days of the current month
+            cell.innerHTML = day;
+            day++;
+          }
+        }
+      }
+      // Get the name of the month
+      var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var monthName = monthNames[month];
+      // Set the text of the title element to the month and year
+      document.getElementById("title").innerHTML = monthName + " " + year;
+    }
+
+    // Function to go to the previous month
+    function prevMonth() {
+      month--;
+      if (month < 0) {
+        month = 11;
+        year--;
+      }
+      init();
+    }
+
+    // Function to go to the next month
+    function nextMonth() {
+      month++;
+      if (month > 11) {
+        month = 0;
+        year++;
+      }
+      init();
+    }
+  </script>
+</body>
+
